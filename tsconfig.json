@@ -41,7 +41,13 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
+    "paths": {
+      "@domain/*": ["src/domain/*"],
+      "@application/*": ["src/application/*"],
+      "@infrastructure/*": ["src/infrastructure/*"],
+      "@shared/*": ["src/shared/*"]
+    }
   },
-  "include": ["src/**/*.ts", "main.ts"],  
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "main.ts"],  
   "exclude": ["node_modules", "dist", "tests"]
 }

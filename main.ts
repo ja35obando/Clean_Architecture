@@ -1,5 +1,4 @@
-import { healthCheck } from "./src/shared/health.js";
+import { buildServer } from "@infrastructure/http/server.js";
 
-const health = healthCheck();
-
-console.log(`Status: ${health.ok}, Timestamp: ${health.timestamp}, Uptime: ${health.uptime}s`);
+const port = Number(process.env.PORT) || 3000;
+buildServer().then((app) => app.listen({ port }))
