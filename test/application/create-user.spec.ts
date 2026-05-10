@@ -7,6 +7,7 @@ describe("CreateOrderUseCase", () => {
         const mockRepo: OrderRepository = {
             save: vi.fn().mockResolvedValue(undefined),
             findById: vi.fn().mockResolvedValue(null),
+            findAll: vi.fn().mockResolvedValue([]),
         };
 
         const useCase = new CreateOrderUseCase(mockRepo);
@@ -25,6 +26,7 @@ describe("CreateOrderUseCase", () => {
         const mockRepo: OrderRepository = {
             save: vi.fn().mockResolvedValue(undefined),
             findById: vi.fn().mockResolvedValue(existingOrder),
+            findAll: vi.fn().mockResolvedValue([]),
         };
 
         const useCase = new CreateOrderUseCase(mockRepo);

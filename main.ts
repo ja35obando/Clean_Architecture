@@ -1,4 +1,12 @@
 import { buildServer } from "@infrastructure/http/server.js";
+import { config } from "./src/config/env.js";
 
-const port = Number(process.env.PORT) || 3000;
-buildServer().then((app) => app.listen({ port }))
+buildServer().then((app) => {
+  app.listen({ port: config.port, host: '0.0.0.0' }, (err, address) => {
+    if (err) {
+      console.error(err);
+      process.exit(1);
+    }
+    console.log(`🚀 Servidor Clean Architecture listo en: ${address}`);
+  });
+});
