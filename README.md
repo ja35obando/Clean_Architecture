@@ -1,79 +1,60 @@
-## clean-architecture-ts
+# 🏗️ TypeScript Clean Architecture Blueprint
 
-Un esqueleto de proyecto TypeScript con estructura de "clean architecture" preparado para desarrollo local y pruebas con Vitest.
+Un ecosistema profesional diseñado bajo los principios de **Clean Architecture**, optimizado para escalabilidad, testabilidad y tipado estricto. Este repositorio demuestra cómo separar las reglas de negocio de los detalles técnicos, permitiendo un mantenimiento sostenible a largo plazo.
 
-Este README cubre cómo poner en marcha el proyecto, ejecutar las pruebas, realizar el typecheck y una breve referencia a la función trivial `healthCheck` añadida en `src/shared/health.ts`.
-
-## Requisitos
-
-- Node 18+ (se recomienda 18 o superior) y npm.
-- TypeScript y dependencias se instalan desde `devDependencies` (el proyecto ya las listará en `package.json`).
-
-## Instalación
-
-Instala las dependencias con:
-
-```bash
-npm install
-```
-
-## Scripts útiles
-
-- `npm run dev` — ejecuta `tsx main.ts` (entorno de desarrollo rápido; `main.ts` actualmente está vacío y puedes usarlo como punto de entrada).
-- `npm test` — ejecuta la suite de tests con Vitest (`vitest run`).
-- `npx tsc --noEmit` — corre el typechecker de TypeScript sin emitir archivos.
-
-Ejemplo rápido:
-
-```bash
-npm install
-npm test
-npx tsc --noEmit
-```
-
-## Estructura principal del proyecto
-
-Directorio de alto nivel relevante:
-
-- `src/` — código fuente TypeScript.
-  - `application/`, `domain/`, `infrastructure/`, `shared/` — organización por capas (clean architecture).
-  - `src/shared/health.ts` — contiene una función trivial `healthCheck()` usada por los tests de ejemplo.
-- `test/` — tests (Vitest). Los tests de ejemplo están en `test/shared/health.spec.ts`.
-- `main.ts` — punto de entrada para ejecutar en modo `dev`.
-
-## Sobre `healthCheck`
-
-Se añadió una función trivial en `src/shared/health.ts`:
-
-- `healthCheck(): { ok: boolean; uptime: number; timestamp: string }` — devuelve un objeto simple que indica que la aplicación está OK, el `uptime` del proceso (si está disponible) y un `timestamp` en formato ISO.
-
-Esto se creó principalmente como prueba de integración ligera para asegurar que el entorno de testing y el arranque funcionan correctamente.
-
-## Notas sobre TypeScript y ESM
-
-El proyecto está configurado en modo ESM (`package.json` contiene `"type": "module"`) y `tsconfig.json` usa `module: "nodenext"`.
-
-También se añadió `"types": ["node"]` en `tsconfig.json` para que las APIs de Node (como `process`) estén tipadas correctamente.
-
-Si prefieres CommonJS en vez de ESM, tendrás que ajustar `package.json` y/o `tsconfig.json` en consecuencia.
-
-## Ejecutar tests en watch (desarrollo)
-
-Puedes ejecutar Vitest en modo watch con:
-
-```bash
-npx vitest --watch
-```
-
-## Contribuir
-
-- Añade tests para nuevas funciones en `test/`.
-- Mantén la separación por capas (application/domain/infrastructure/shared).
-
-## Contacto y seguimiento
-
-Si quieres que añada checks de salud más avanzados (comprobación de DB, colas, servicios externos, etc.) o integración continua (GitHub Actions), dímelo y lo preparo.
+<p align="center">
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/Vitest-6E9F18?style=for-the-badge&logo=vitest&logoColor=white" />
+  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
+  <img src="https://img.shields.io/badge/Clean_Architecture-4CAF50?style=for-the-badge" />
+</p>
 
 ---
 
-Generado automáticamente: contiene instrucciones mínimas para arrancar, testear y entender la función `healthCheck` añadida.
+## 🎯 Propósito del Proyecto
+Demostrar una implementación real de arquitectura por capas. El objetivo es cumplir la **Regla de Dependencia**: el código solo depende de capas más internas (hacia el Dominio). Esto protege la lógica de negocio frente a cambios en bases de datos, frameworks de UI o APIs externas.
+
+## 🏛️ Organización por Capas
+
+
+
+- **`src/domain/`**: **Entidades y Contratos.** Contiene la lógica de negocio pura y las interfaces (Repositorios) que definen cómo se deben comportar los datos sin saber *dónde* se guardan.
+- **`src/application/`**: **Casos de Uso.** Orquesta el flujo de información. Es el cerebro que utiliza los repositorios para ejecutar acciones específicas (ej: `CreateUserUseCase`).
+- **`src/infrastructure/`**: **Detalles Técnicos.** Implementaciones concretas de los contratos del dominio (ej: `InMemoryUserRepository`). Aquí es donde reside la tecnología volátil.
+- **`src/shared/`**: **Utilidades Transversales.** Lógica común y monitoreo de salud del sistema.
+
+---
+
+## 🚀 Implementación de Referencia
+El proyecto incluye un flujo completo de **Gestión de Usuarios** para ejemplificar el desacoplamiento:
+
+1. **Definición de Contrato**: La interfaz `UserRepository` vive en el Dominio.
+2. **Lógica de Orquestación**: El caso de uso en la capa de Aplicación inyecta el repositorio para procesar la creación de usuarios.
+3. **Persistencia Plug-and-Play**: La implementación en la Infraestructura es intercambiable sin afectar la lógica superior.
+
+---
+
+## 🛠️ Comandos Rápidos
+
+| Comando | Descripción |
+| :--- | :--- |
+| `npm install` | Instalación de dependencias y entorno ESM. |
+| `npm run dev` | Ejecución del punto de entrada con `tsx`. |
+| `npm test` | Suite de pruebas unitarias e integración con **Vitest**. |
+| `npx tsc --noEmit` | Validación de tipos de TypeScript. |
+
+---
+
+## 🧪 Estrategia de Calidad
+- **Tests Unitarios**: Validación de Casos de Uso mediante mocks de repositorios.
+- **Testing Moderno**: Suite configurada con Vitest para máxima velocidad en entornos ESM.
+- **Type-Safety**: Uso estricto de TypeScript para prevenir errores en tiempo de diseño.
+
+---
+
+## 👨‍💻 Autor
+**Jose Obando** - Senior Mobile Solutions Architect.
+Especialista en arquitecturas móviles nativas e híbridas con enfoque en escalabilidad empresarial.
+
+---
+> *Este repositorio es una base técnica para arquitecturas modernas desacopladas.*
